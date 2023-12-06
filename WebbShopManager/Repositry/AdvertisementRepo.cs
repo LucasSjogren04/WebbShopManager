@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebbShopManager.Entities;
+using Dapper;
+using Microsoft.Data.SqlClient;
 
 namespace WebbShopManager.Repositry
 {
@@ -16,7 +18,7 @@ namespace WebbShopManager.Repositry
         {
             using (IDbConnection db = new SqlConnection(_connString))
             {
-                return db.Query<Supplier>("SuppliersGetAll",
+                return db.Query<Advertisement>("ShowAllAdvertisements",
                     commandType: CommandType.StoredProcedure).ToList();
             }
         }
