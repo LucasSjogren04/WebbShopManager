@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebbShopManager.Views
+namespace WebbShopManager.Views.UI
 {
     public class UserInterface
     {

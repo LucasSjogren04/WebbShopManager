@@ -1,6 +1,8 @@
-﻿using WebbShopManager.Views;
-using WebbShopManager.Repositry;
+﻿using WebbShopManager.Repositry;
 using WebbShopManager.Entities;
+using Microsoft.Data.SqlClient;
+using System.Data;
+using WebbShopManager.Views.UI;
 class Program
 {
     static void Main(string[] args)
@@ -18,5 +20,5 @@ class Program
 
         //userInterface.ViewMainMenu();     
         //userInterface.ViewSearchMeny();
-    }
+    }    
 }
