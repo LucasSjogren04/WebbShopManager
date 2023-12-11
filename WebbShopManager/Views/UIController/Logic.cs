@@ -16,63 +16,46 @@ namespace WebbShopManager.Views.UIController
     {
         private static void InsertAdvertisement()
         {
-            AdvertisementRepo advertisementRepo = new AdvertisementRepo();
-            Advertisement advertisement = new Advertisement();
-
             try
             {
-                while (object.Equals(advertisement.Title,             default(string)) &&
-                       object.Equals(advertisement.DescriptionColumn, default(string)) &&
-                       object.Equals(advertisement.Price,             default(decimal)))
-                { 
+                AdvertisementRepo advertisementRepo = new AdvertisementRepo();
+                Advertisement advertisement = new Advertisement();
 
+                while (string.IsNullOrEmpty(advertisement.Title))
+                {
+                    Console.WriteLine("Enter a Title: ");
+                    advertisement.Title = Console.ReadLine();
                 }
 
-                
+                while (string.IsNullOrEmpty(advertisement.DescriptionColumn))
+                {
+                    Console.WriteLine("Enter Description: ");
+                    advertisement.DescriptionColumn = Console.ReadLine();
+                }
 
+                bool validPrice = false;
+                while (!validPrice)
+                {
+                    Console.WriteLine("Enter Price: ");
+                    string priceInput = Console.ReadLine();
 
-
-
-
-                //while (advertisement.Title == null
-                //    && advertisement.DescriptionColumn == null
-                //    && advertisement.Price == null)
-                //{
-
-                //}
-
-                //Console.WriteLine("Enter a Title:");
-                //advertisement.Title = Console.ReadLine();
-
-                //if (advertisement.Title.IsNullOrEmpty())
-                //{
-                //    Console.WriteLine("You must fill in a title");
-                //}
-
-                //Console.WriteLine("Enter Description:");
-                //advertisement.DescriptionColumn = Console.ReadLine();
-
-                //Console.WriteLine("Enter Price:");
-                //advertisement.Price = decimal.Parse(Console.ReadLine());  
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Invalid input. Please enter a valid numeric value for the Price.");
+                    if (decimal.TryParse(priceInput, out decimal price))
+                    {
+                        advertisement.Price = price;
+                        validPrice = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid price. Please enter a valid numeric value.");
+                    }
+                }
+                AdvertisementRepo.InsertAdvertisement(advertisement);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
-
-
-
-
-            //using IDbConnection db = new SqlConnection(AdvertisementRepo._connString);
-            //string sql = $"insert into Suppliers(CompanyName,ContactName,ContactTitle) " +
-            //            $"values('{advertisement.Title}',' {advertisement.DescriptionColumn}','{advertisement.Price}')";
-
-
-            //db.Execute(sql);
         }
+
     }
 }
