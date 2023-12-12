@@ -12,9 +12,9 @@ using WebbShopManager.Repositry;
 
 namespace WebbShopManager.Views.UIController
 {
-    public class Logic
+    public static class InsertLogic
     {
-        private static void InsertAdvertisement()
+        private static void UIInsertAdvertisement()
         {
             try
             {

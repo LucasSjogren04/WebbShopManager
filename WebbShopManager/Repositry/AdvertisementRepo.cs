@@ -10,7 +10,7 @@ using Microsoft.Data.SqlClient;
 
 namespace WebbShopManager.Repositry
 {
-    public class AdvertisementRepo
+    public static class AdvertisementRepo
     {
         public static string _connString = "Data Source=DESKTOP-F2QGBSH\\SQLEXPRESS;Initial Catalog=WebbShopAdvertisements;Integrated Security=true;trustservercertificate=true";
 
@@ -21,15 +21,19 @@ namespace WebbShopManager.Repositry
                 commandType: CommandType.StoredProcedure).ToList();
         }
 
-        public static List<Advertisement> SearchForAdvertisement()
+        public static List<Advertisement> SearchForAdvertisement(Advertisement ad)
         {
             using IDbConnection db = new SqlConnection(_connString);
             DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Title", ad.Title);
 
-
-            return db.Query<Advertisement>("SearchForAdvertisementByName",
+            var result = db.Query<Advertisement>("SearchForAdvertisementByName",
+                parameters,
                 commandType: CommandType.StoredProcedure).ToList();
+
+            return result;
         }
+
         public static void InsertAdvertisement(Advertisement ad)
         {
             using IDbConnection db = new SqlConnection(_connString);
@@ -42,6 +46,7 @@ namespace WebbShopManager.Repositry
             db.Execute("InsertAdvertisement", parameters,
                 commandType: CommandType.StoredProcedure);
         }
+
         public static void Delete(int advertisementID)
         {
             using IDbConnection db = new SqlConnection(_connString);
