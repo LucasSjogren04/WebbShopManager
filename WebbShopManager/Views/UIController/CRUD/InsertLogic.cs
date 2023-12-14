@@ -9,34 +9,34 @@ using System.Text;
 using System.Threading.Tasks;
 using WebbShopManager.Entities;
 using WebbShopManager.Repositry;
+using WebbShopManager.Views.UI;
 
-namespace WebbShopManager.Views.UIController
+namespace WebbShopManager.Views.UIController.CRUD
 {
     public static class InsertLogic
     {
-        private static void UIInsertAdvertisement()
+        public static void InsertAdvertisementLogic()
         {
             try
             {
-                AdvertisementRepo advertisementRepo = new AdvertisementRepo();
                 Advertisement advertisement = new Advertisement();
 
                 while (string.IsNullOrEmpty(advertisement.Title))
                 {
-                    Console.WriteLine("Enter a Title: ");
+                    EnterX.EnterTitel();
                     advertisement.Title = Console.ReadLine();
                 }
 
                 while (string.IsNullOrEmpty(advertisement.DescriptionColumn))
                 {
-                    Console.WriteLine("Enter Description: ");
+                    EnterX.EnterDescription();
                     advertisement.DescriptionColumn = Console.ReadLine();
                 }
 
                 bool validPrice = false;
                 while (!validPrice)
                 {
-                    Console.WriteLine("Enter Price: ");
+                    EnterX.EnterPrice();
                     string priceInput = Console.ReadLine();
 
                     if (decimal.TryParse(priceInput, out decimal price))
@@ -46,10 +46,31 @@ namespace WebbShopManager.Views.UIController
                     }
                     else
                     {
-                        Console.WriteLine("Invalid price. Please enter a valid numeric value.");
+                        InvalidX.InvalidPrice();
                     }
                 }
+                bool validID = false;
+                do
+                {
+                    EnterX.EnterID();
+                    string idInput = Console.ReadLine();
+                    Exit.Do_You_Want_To_Exit_To_Main_Menu(idInput);
+
+                    if (int.TryParse(idInput, out int id) && AdvertisementRepo.GetCategoryIDs() >= id)
+                    {
+                        advertisement.CategoryID = id;
+                        validID = true;
+                    }
+                    else
+                    {
+                        InvalidX.InvalidID();
+                        validID = false;
+                    }
+                } while (!validID);
+                
                 AdvertisementRepo.InsertAdvertisement(advertisement);
+                Console.Clear();
+                MenuControllerLogic.MenuPlayer();
             }
             catch (Exception ex)
             {

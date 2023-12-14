@@ -21,19 +21,30 @@ namespace WebbShopManager.Repositry
                 commandType: CommandType.StoredProcedure).ToList();
         }
 
-        public static List<Advertisement> SearchForAdvertisement(Advertisement ad)
+        //public static List<Advertisement> SearchForAdvertisement(Advertisement ad)
+        //{
+        //    using IDbConnection db = new SqlConnection(_connString);
+        //    DynamicParameters parameters = new DynamicParameters();
+        //    parameters.Add("@Title", ad.Title);
+
+        //    var result = db.Query<Advertisement>("SearchForAdvertisementByName",
+        //        parameters,
+        //        commandType: CommandType.StoredProcedure).ToList();
+
+        //    return result;
+        //}
+
+        public static List<Advertisement> SearchForAdvertisement(string search)
         {
-            using IDbConnection db = new SqlConnection(_connString);
+            using IDbConnection db= new SqlConnection(_connString);
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@Title", ad.Title);
+            parameters.Add("@Title", search);
 
             var result = db.Query<Advertisement>("SearchForAdvertisementByName",
                 parameters,
                 commandType: CommandType.StoredProcedure).ToList();
-
             return result;
         }
-
         public static void InsertAdvertisement(Advertisement ad)
         {
             using IDbConnection db = new SqlConnection(_connString);
@@ -69,6 +80,20 @@ namespace WebbShopManager.Repositry
 
             db.Execute("UpdateAdvertisement", parameters,
                 commandType: CommandType.StoredProcedure);
+        }
+        public static int GetIDs()
+        {
+            using IDbConnection db = new SqlConnection(_connString);
+
+            var result = db.Query<int>("CountIDs", commandType: CommandType.StoredProcedure).SingleOrDefault();
+            return result;
+        }
+        public static int GetCategoryIDs()
+        {
+            using IDbConnection db = new SqlConnection(_connString);
+
+            var result = db.Query<int>("CountCategoryIDs", commandType: CommandType.StoredProcedure).SingleOrDefault();
+            return result;
         }
     }
 }

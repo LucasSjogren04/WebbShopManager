@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebbShopManager.Views.UI
 {
-    public static class UserInterface
+    public static class Menus
     {
         public static void ViewMainMenu()
         {
@@ -21,12 +21,6 @@ namespace WebbShopManager.Views.UI
             Console.WriteLine("*                                          *");
             Console.WriteLine("********************************************");
         }
-
-        public static void ViewInputField()
-        {
-            Console.WriteLine(": ");
-        }
-
         public static void ViewSearchMenu()
         {
             Console.WriteLine("**************************************");
@@ -36,27 +30,6 @@ namespace WebbShopManager.Views.UI
             Console.WriteLine("*  Search for an advertisement: 2    *");
             Console.WriteLine("*                                    *");
             Console.WriteLine("**************************************");
-        }
-        public static void EnterTitel()
-        {
-            Console.WriteLine("Enter titel: ");
-        }
-
-        public static void EnterDescriptionColumn()
-        {
-            Console.WriteLine("Enter description: ");
-        }
-
-        public static void EnterPrice()
-        {
-            Console.WriteLine("EnterPrice");
-        }
-
-
-
-        public static void ClearConsole()
-        {
-            Console.Clear();
         }
     }
 }
