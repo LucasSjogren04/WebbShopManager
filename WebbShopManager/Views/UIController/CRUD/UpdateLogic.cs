@@ -26,13 +26,14 @@ namespace WebbShopManager.Views.UIController.CRUD
                     string idInput = Console.ReadLine();
                     Exit.Do_You_Want_To_Exit_To_Main_Menu(idInput);
 
-                    if (int.TryParse(idInput, out int id) && AdvertisementRepo.GetIDs() <= id)
+                    if (int.TryParse(idInput, out int id) && AdvertisementRepo.GetIDRange().Contains(id))
                     {
+                        advertisement.AdvertisementID = id;
                         validID = true;
                     }
                     else
                     {
-                        InvalidX.InvalidNumber();
+                        InvalidX.InvalidID();
                         validID = false;
                     }
                 } while (!validID);
@@ -71,8 +72,31 @@ namespace WebbShopManager.Views.UIController.CRUD
                         InvalidX.InvalidPrice();
                     }
                 }
-                AdvertisementRepo.InsertAdvertisement(advertisement);
+                bool validCategoryID = false;
+                do
+                {
+                    foreach (var category in CategoryRepo.ShowAllCategories())
+                    {
+                        Console.WriteLine(category.CategoryID + " " + category.CategoryName);
+                    }
+                    EnterX.EnterCategotyID();
+                    string idInput = Console.ReadLine();
+                    Exit.Do_You_Want_To_Exit_To_Main_Menu(idInput);
+
+                    if (int.TryParse(idInput, out int categoryID) && AdvertisementRepo.GetCategoryIDRange().Contains(categoryID))
+                    {
+                        advertisement.CategoryID = categoryID;
+                        validCategoryID = true;
+                    }
+                    else
+                    {
+                        InvalidX.InvalidNumber();
+                        validID = false;
+                    }
+                } while (!validCategoryID);
+                AdvertisementRepo.Update(advertisement);
                 Console.Clear();
+                MenuControllerLogic.MenuPlayer();
             }
             catch (Exception ex)
             {

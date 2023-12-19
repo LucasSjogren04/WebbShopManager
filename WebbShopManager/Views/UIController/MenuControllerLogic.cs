@@ -47,11 +47,14 @@ namespace WebbShopManager.Views.UIController
                         switch (smNumberInput)
                         {
                             case 1:
-                                {   
+                                {
                                     foreach (var advertisement in AdvertisementRepo.GetAllAdvertisements())
                                     {
-                                        Console.WriteLine(advertisement);
+                                        Console.WriteLine(advertisement.AdvertisementID.ToString() + " " + advertisement.Title + " " + advertisement.DescriptionColumn + " " + advertisement.Price);
                                     }
+                                    Console.ReadLine();
+                                    Console.Clear();
+                                    MenuPlayer();
                                     break;
                                 }
                             case 2:
@@ -60,8 +63,11 @@ namespace WebbShopManager.Views.UIController
                                     string title = Console.ReadLine();
                                     foreach (var advertisement in AdvertisementRepo.SearchForAdvertisement(title))
                                     {
-                                        Console.WriteLine(advertisement);
+                                        Console.WriteLine(advertisement.AdvertisementID.ToString() + " " + advertisement.Title + " " + advertisement.DescriptionColumn + " " + advertisement.Price);
                                     }
+                                    Console.ReadLine();
+                                    Console.Clear();
+                                    MenuPlayer();
                                     break;
                                 }
                         }
@@ -70,16 +76,23 @@ namespace WebbShopManager.Views.UIController
                 case 1:
                     {
                         InsertLogic.InsertAdvertisementLogic();
+                        Console.Clear();
+                        MenuPlayer();
                         break;
+
                     }
                 case 4:
                     {
                         DeleteLogic.DeleteAdvertisement();
+                        Console.Clear();
+                        MenuPlayer();
                         break;
                     }
                 case 3:
                     {
                         UpdateLogic.UpdateAdvertisementLogic();
+                        Console.Clear();
+                        MenuPlayer();
                         break;
                     }
             }

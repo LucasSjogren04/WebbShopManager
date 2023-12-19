@@ -52,7 +52,11 @@ namespace WebbShopManager.Views.UIController.CRUD
                 bool validID = false;
                 do
                 {
-                    EnterX.EnterID();
+                    foreach (var category in CategoryRepo.ShowAllCategories())
+                    {
+                        Console.WriteLine(category.CategoryID + " " + category.CategoryName);
+                    }
+                    EnterX.EnterCategotyID();
                     string idInput = Console.ReadLine();
                     Exit.Do_You_Want_To_Exit_To_Main_Menu(idInput);
 
@@ -64,6 +68,8 @@ namespace WebbShopManager.Views.UIController.CRUD
                     else
                     {
                         InvalidX.InvalidID();
+                        Console.ReadLine();
+                        Console.Clear();    
                         validID = false;
                     }
                 } while (!validID);

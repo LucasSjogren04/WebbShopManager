@@ -21,6 +21,7 @@ namespace WebbShopManager.Repositry
                 commandType: CommandType.StoredProcedure).ToList();
         }
 
+
         //public static List<Advertisement> SearchForAdvertisement(Advertisement ad)
         //{
         //    using IDbConnection db = new SqlConnection(_connString);
@@ -36,15 +37,34 @@ namespace WebbShopManager.Repositry
 
         public static List<Advertisement> SearchForAdvertisement(string search)
         {
-            using IDbConnection db= new SqlConnection(_connString);
+            using IDbConnection db = new SqlConnection(_connString);
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@Title", search);
+            parameters.Add("@SearchCondition", search);
 
-            var result = db.Query<Advertisement>("SearchForAdvertisementByName",
-                parameters,
+            var model = db.Query<Advertisement>("SearchForAdvertisementByName", parameters,
                 commandType: CommandType.StoredProcedure).ToList();
-            return result;
+
+            return model;
         }
+
+        //public static List<Advertisement> GetCustomers()
+        //{
+        //    Console.Write("Ange ett sökvillkor för kunden:");
+        //    string condition = Console.ReadLine();
+
+        //    using (IDbConnection db = new SqlConnection(_connString))
+        //    {
+        //        var parameters = new DynamicParameters();
+        //        parameters.Add("@SearchCondition", condition);
+
+        //        //En SP anropas med parameters och man behöver ange commandType
+        //        var model = db.Query<Advertisement>("SearchForAdvertisementByName", parameters,
+        //           commandType: CommandType.StoredProcedure).ToList();
+
+        //        return model;
+
+        //    }
+        //}
         public static void InsertAdvertisement(Advertisement ad)
         {
             using IDbConnection db = new SqlConnection(_connString);
@@ -93,6 +113,21 @@ namespace WebbShopManager.Repositry
             using IDbConnection db = new SqlConnection(_connString);
 
             var result = db.Query<int>("CountCategoryIDs", commandType: CommandType.StoredProcedure).SingleOrDefault();
+            return result;
+        }
+        public static List<int> GetIDRange()
+        {
+            using IDbConnection db = new SqlConnection(_connString);
+
+            var result = db.Query<int>("GetIDRange", commandType: CommandType.StoredProcedure).ToList();
+            return result;
+        }
+
+        public static List<int> GetCategoryIDRange()
+        {
+            using IDbConnection db = new SqlConnection(_connString);
+
+            var result = db.Query<int>("GetCategoryIDRange", commandType: CommandType.StoredProcedure).ToList();
             return result;
         }
     }

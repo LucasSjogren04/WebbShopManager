@@ -28,7 +28,7 @@ namespace WebbShopManager.Views.UI
         }
         public static void EnterCategotyID()
         {
-            Console.Write("Enter categoryID");
+            Console.Write("Enter categoryID: ");
         }
         public static void EnterDefault()
         {
