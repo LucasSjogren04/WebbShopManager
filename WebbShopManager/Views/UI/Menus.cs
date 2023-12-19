@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WebbShopManager.Views.UI
 {
-    public class UserInterface
+    public static class Menus
     {
-        public void ViewMainMenu()
+        public static void ViewMainMenu()
         {
             Console.WriteLine("********************************************");
             Console.WriteLine("*               Main Menu                  *");
@@ -18,10 +18,10 @@ namespace WebbShopManager.Views.UI
             Console.WriteLine("*  Update advertisement:      3            *");
             Console.WriteLine("*  Delete advertisement(s):   4            *");
             Console.WriteLine("*                                          *");
+            Console.WriteLine("*                                          *");
             Console.WriteLine("********************************************");
         }
-
-        public void ViewSearchMeny()
+        public static void ViewSearchMenu()
         {
             Console.WriteLine("**************************************");
             Console.WriteLine("*        Advertisement Menu          *");
@@ -30,12 +30,6 @@ namespace WebbShopManager.Views.UI
             Console.WriteLine("*  Search for an advertisement: 2    *");
             Console.WriteLine("*                                    *");
             Console.WriteLine("**************************************");
-        }
-
-
-        public void ClearConsole()
-        {
-            Console.Clear();
         }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.Data.SqlClient;
 
 namespace WebbShopManager.Repositry
 {
-    public class AdvertisementRepo
+    public static class AdvertisementRepo
     {
         public static string _connString = "Data Source=DESKTOP-F2QGBSH\\SQLEXPRESS;Initial Catalog=WebbShopAdvertisements;Integrated Security=true;trustservercertificate=true";
 
@@ -21,15 +21,50 @@ namespace WebbShopManager.Repositry
                 commandType: CommandType.StoredProcedure).ToList();
         }
 
-        public static List<Advertisement> SearchForAdvertisement()
+
+        //public static List<Advertisement> SearchForAdvertisement(Advertisement ad)
+        //{
+        //    using IDbConnection db = new SqlConnection(_connString);
+        //    DynamicParameters parameters = new DynamicParameters();
+        //    parameters.Add("@Title", ad.Title);
+
+        //    var result = db.Query<Advertisement>("SearchForAdvertisementByName",
+        //        parameters,
+        //        commandType: CommandType.StoredProcedure).ToList();
+
+        //    return result;
+        //}
+
+        public static List<Advertisement> SearchForAdvertisement(string search)
         {
             using IDbConnection db = new SqlConnection(_connString);
             DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@SearchCondition", search);
 
-
-            return db.Query<Advertisement>("SearchForAdvertisementByName",
+            var model = db.Query<Advertisement>("SearchForAdvertisementByName", parameters,
                 commandType: CommandType.StoredProcedure).ToList();
+
+            return model;
         }
+
+        //public static List<Advertisement> GetCustomers()
+        //{
+        //    Console.Write("Ange ett sökvillkor för kunden:");
+        //    string condition = Console.ReadLine();
+
+        //    using (IDbConnection db = new SqlConnection(_connString))
+        //    {
+        //        var parameters = new DynamicParameters();
+        //        parameters.Add("@SearchCondition", condition);
+
+        //        //En SP anropas med parameters och man behöver ange commandType
+        //        var model = db.Query<Advertisement>("SearchForAdvertisementByName", parameters,
+        //           commandType: CommandType.StoredProcedure).ToList();
+
+        //        return model;
+
+        //    }
+        //}
         public static void InsertAdvertisement(Advertisement ad)
         {
             using IDbConnection db = new SqlConnection(_connString);
@@ -42,6 +77,7 @@ namespace WebbShopManager.Repositry
             db.Execute("InsertAdvertisement", parameters,
                 commandType: CommandType.StoredProcedure);
         }
+
         public static void Delete(int advertisementID)
         {
             using IDbConnection db = new SqlConnection(_connString);
@@ -64,6 +100,35 @@ namespace WebbShopManager.Repositry
 
             db.Execute("UpdateAdvertisement", parameters,
                 commandType: CommandType.StoredProcedure);
+        }
+        public static int GetIDs()
+        {
+            using IDbConnection db = new SqlConnection(_connString);
+
+            var result = db.Query<int>("CountIDs", commandType: CommandType.StoredProcedure).SingleOrDefault();
+            return result;
+        }
+        public static int GetCategoryIDs()
+        {
+            using IDbConnection db = new SqlConnection(_connString);
+
+            var result = db.Query<int>("CountCategoryIDs", commandType: CommandType.StoredProcedure).SingleOrDefault();
+            return result;
+        }
+        public static List<int> GetIDRange()
+        {
+            using IDbConnection db = new SqlConnection(_connString);
+
+            var result = db.Query<int>("GetIDRange", commandType: CommandType.StoredProcedure).ToList();
+            return result;
+        }
+
+        public static List<int> GetCategoryIDRange()
+        {
+            using IDbConnection db = new SqlConnection(_connString);
+
+            var result = db.Query<int>("GetCategoryIDRange", commandType: CommandType.StoredProcedure).ToList();
+            return result;
         }
     }
 }
