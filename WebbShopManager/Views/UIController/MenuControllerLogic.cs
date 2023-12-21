@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,17 +42,37 @@ namespace WebbShopManager.Views.UIController
                             EnterX.EnterDefault();
                             smInput = Console.ReadLine();
                             Exit.Do_You_Want_To_Exit_To_Main_Menu(smInput);
-                        } while (!CheckNumberValidity.IntcheckerOneToTwo(smInput, out resultSearch));
+                        } while (!CheckNumberValidity.IntcheckerOneToThree(smInput, out resultSearch));
 
                         int smNumberInput = resultSearch;
                         switch (smNumberInput)
                         {
                             case 1:
                                 {
+                                    if (AdvertisementRepo.GetIDs() == 0)
+                                    {
+                                        Errors.NoAds();
+                                        Console.ReadLine();
+                                        Console.Clear();
+                                        MenuPlayer();
+                                    }
                                     foreach (var advertisement in AdvertisementRepo.GetAllAdvertisements())
                                     {
-                                        Console.WriteLine(advertisement.AdvertisementID.ToString() + " " + advertisement.Title + " " + advertisement.DescriptionColumn + " " + advertisement.Price);
+                                        Console.WriteLine("ID: \"" + advertisement.AdvertisementID.ToString() + "\" Title : \"" + advertisement.Title);
                                     }
+                                    EnterX.EnterIDToExpand();
+                                    int selectedID;
+                                    while ((!int.TryParse(Console.ReadLine(), out selectedID) || !AdvertisementRepo.GetIDRange().Contains(selectedID)))
+                                    {
+                                        InvalidX.InvalidNumber();
+                                    }
+
+                                    var objectsList = AdvertisementRepo.GetAllAdvertisements2();
+                                    Advertisement selectedObject = objectsList.Find(obj => obj.AdvertisementID == selectedID);
+
+                                    // Display the details of the selected object
+                                    Console.WriteLine($"\nSelected Advertisement: {selectedObject.AdvertisementID}");
+                                    Console.WriteLine($"Title: {selectedObject.Title + " Description: " +  selectedObject.DescriptionColumn}" + " Price: " + selectedObject.Price + " CategoryID: " + selectedObject.CategoryID);
                                     Console.ReadLine();
                                     Console.Clear();
                                     MenuPlayer();
@@ -63,7 +84,21 @@ namespace WebbShopManager.Views.UIController
                                     string title = Console.ReadLine();
                                     foreach (var advertisement in AdvertisementRepo.SearchForAdvertisement(title))
                                     {
-                                        Console.WriteLine(advertisement.AdvertisementID.ToString() + " " + advertisement.Title + " " + advertisement.DescriptionColumn + " " + advertisement.Price);
+                                        Console.WriteLine("ID: \"" + advertisement.AdvertisementID.ToString() + "\" Title : \"" + advertisement.Title + "\" Description: \"" + advertisement.DescriptionColumn + "\" Price: \"" + advertisement.Price + "\"");
+                                    }
+                                    Console.ReadLine();
+                                    Console.Clear();
+                                    MenuPlayer();
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    EnterX.EnterCategoryName();
+                                    string title = Console.ReadLine();
+                                    Console.WriteLine("Search results: ");
+                                    foreach (var advertisement in AdvertisementRepo.SearchAdvertisementsByCategoryName(title))
+                                    {
+                                        Console.WriteLine("ID: \"" + advertisement.AdvertisementID.ToString() + "\" Title : \"" + advertisement.Title + "\" Description: \"" + advertisement.DescriptionColumn + "\" Price: \"" + advertisement.Price + "\"");
                                     }
                                     Console.ReadLine();
                                     Console.Clear();
@@ -79,7 +114,6 @@ namespace WebbShopManager.Views.UIController
                         Console.Clear();
                         MenuPlayer();
                         break;
-
                     }
                 case 4:
                     {

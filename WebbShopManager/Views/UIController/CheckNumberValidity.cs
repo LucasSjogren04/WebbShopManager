@@ -23,10 +23,10 @@ namespace WebbShopManager.Views.UIController
             }
         }
 
-        public static bool IntcheckerOneToTwo(string input, out int result)
+        public static bool IntcheckerOneToThree(string input, out int result)
         {
             string inputString = input;
-            if (int.TryParse(inputString, out int outputInt) && (outputInt >= 1 && outputInt <= 2))
+            if (int.TryParse(inputString, out int outputInt) && (outputInt >= 1 && outputInt <= 3))
             {
                 result = outputInt;
                 return true;

@@ -13,24 +13,21 @@ namespace WebbShopManager.Views.UIController.CRUD
     {
         public static void DeleteAdvertisement()
         {
-            if (AdvertisementRepo.GetIDs() <= 0)
-            {
-                Errors.NoAds();
-                return;
-            }
             bool validID = false;
             do
             {
                 EnterX.EnterID();
                 string idInput = Console.ReadLine();
+                Exit.Do_You_Want_To_Exit_To_Main_Menu(idInput);
 
-                if (int.TryParse(idInput, out int id) && AdvertisementRepo.GetIDs() <= id)
+                if (int.TryParse(idInput, out int id) && AdvertisementRepo.GetIDRange().Contains(id))
                 {
                     validID = true;
+                    AdvertisementRepo.Delete(id);
                 }
                 else
                 {
-                    InvalidX.InvalidNumber();
+                    InvalidX.InvalidID();
                     validID = false;
                 }
             } while (!validID);

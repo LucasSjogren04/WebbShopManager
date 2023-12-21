@@ -20,6 +20,13 @@ namespace WebbShopManager.Repositry
             return db.Query<Advertisement>("ShowAllAdvertisements",
                 commandType: CommandType.StoredProcedure).ToList();
         }
+        public static List<Advertisement> GetAllAdvertisements2()
+        {
+            using IDbConnection db = new SqlConnection(_connString);
+            return db.Query<Advertisement>("ShowALLAdvertisements2",
+                commandType: CommandType.StoredProcedure).ToList();
+        }
+
 
 
         //public static List<Advertisement> SearchForAdvertisement(Advertisement ad)
@@ -46,6 +53,33 @@ namespace WebbShopManager.Repositry
 
             return model;
         }
+
+        public static List<Advertisement> SearchAdvertisementsByCategoryName(string search)
+        {
+            using IDbConnection db = new SqlConnection(_connString);
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@CategoryName", search);
+
+            var model = db.Query<Advertisement>("SearchAdvertisementsByCategoryName", parameters,
+                commandType: CommandType.StoredProcedure).ToList();
+
+            return model;
+        }
+
+
+        public static List<Advertisement> SearchFor(string search)
+        {
+            using IDbConnection db = new SqlConnection(_connString);
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@SearchCondition", search);
+
+            var model = db.Query<Advertisement>("SearchForAdvertisementByName", parameters,
+                commandType: CommandType.StoredProcedure).ToList();
+
+            return model;
+        }
+
+
 
         //public static List<Advertisement> GetCustomers()
         //{

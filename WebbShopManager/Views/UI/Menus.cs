@@ -28,6 +28,7 @@ namespace WebbShopManager.Views.UI
             Console.WriteLine("*                                    *");
             Console.WriteLine("*  View all advertisements:     1    *");
             Console.WriteLine("*  Search for an advertisement: 2    *");
+            Console.WriteLine("*  Search by category: 3             *");
             Console.WriteLine("*                                    *");
             Console.WriteLine("**************************************");
         }

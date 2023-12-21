@@ -24,20 +24,26 @@ namespace WebbShopManager.Views.UIController.CRUD
                 while (string.IsNullOrEmpty(advertisement.Title))
                 {
                     EnterX.EnterTitel();
-                    advertisement.Title = Console.ReadLine();
+                    var tinput = Console.ReadLine();
+                    Exit.Do_You_Want_To_Exit_To_Main_Menu(tinput);
+                    advertisement.Title = tinput;
                 }
 
                 while (string.IsNullOrEmpty(advertisement.DescriptionColumn))
                 {
                     EnterX.EnterDescription();
-                    advertisement.DescriptionColumn = Console.ReadLine();
+                    var dinput = Console.ReadLine();
+                    Exit.Do_You_Want_To_Exit_To_Main_Menu(dinput);
+                    advertisement.DescriptionColumn = dinput;
                 }
 
                 bool validPrice = false;
                 while (!validPrice)
                 {
                     EnterX.EnterPrice();
-                    string priceInput = Console.ReadLine();
+                    var pinput = Console.ReadLine();
+                    Exit.Do_You_Want_To_Exit_To_Main_Menu(pinput);
+                    string priceInput = pinput;
 
                     if (decimal.TryParse(priceInput, out decimal price))
                     {

@@ -34,5 +34,13 @@ namespace WebbShopManager.Views.UI
         {
             Console.Write(": ");
         }
+        public static void EnterCategoryName()
+        {
+            Console.Write("Enter category name: ");
+        }
+        public static void EnterIDToExpand()
+        {
+            Console.Write("Enter the ID of the Advertisement you want to select: ");
+        }
     }
 }
